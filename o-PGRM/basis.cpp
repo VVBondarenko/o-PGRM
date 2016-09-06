@@ -1,6 +1,6 @@
 #include "af_poly.c"
 #include "B-splines.c"
-#include "basis_functions.c"
+#include "basis_functions.cpp"
 
 typedef struct rect_area {
     double x0, x1;
