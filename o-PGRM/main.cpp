@@ -20,11 +20,13 @@ using namespace std;
 //}
 
 
-
+double (*phi)(double, double, int);
 
 int main(/*int argc, char *argv[]*/)
 {
     basis test(1,3,0.,1.,0.,1.);
+
+//    phi = (&basis::value_temp);
     cout << "Hello World!" <<test.value_temp(0.,0.1,0) <<endl;
     return 0;
 }

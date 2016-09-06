@@ -7,11 +7,11 @@ private:
 
     basis basis_of_system;
 
-    double (*rightpart_f)  (double x, double y);
-    double (*boundary_f)   (double x, double y);
-    double (*omega)        (double x, double y);
-    double (*omega2)       (double x, double y);
-    double (*structure)    (double x, double y, int n);
+    double (*rightpart_f)  (double x, double y);        //допустимо
+    double (*boundary_phi) (double x, double y);        //может быть
+    double (*omega)        (double x, double y);        //пока что самостоятельная
+    double (*omega2)       (double x, double y);        //аналогично
+    double (*structure)    (double x, double y, int n); //по-сути enum-овый выбор
 
 public:
     solver();

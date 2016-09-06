@@ -552,7 +552,7 @@ compiler_clean:
 main.o: ../o-PGRM/main.cpp ../o-PGRM/basis.cpp \
 		../o-PGRM/af_poly.c \
 		../o-PGRM/B-splines.c \
-		../o-PGRM/basis_functions.c \
+		../o-PGRM/basis_functions.cpp \
 		../o-PGRM/solver.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../o-PGRM/main.cpp
 
