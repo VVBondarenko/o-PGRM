@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -19,7 +20,6 @@ using namespace std;
 //}
 
 
-double (*phi)(double, double, int);
 
 int main(/*int argc, char *argv[]*/)
 {
@@ -30,9 +30,11 @@ int main(/*int argc, char *argv[]*/)
     area.y1 =  M_PI;
     solver task1(1,8,area,1);
     task1.form_system();
-    task1.solve();
-    task1.plot();
+    //task1.solve();
+    task1.print_solution();
+//    task1.plot();
 
+    cout<<"\n\n"<<task1.gauss_integral_left(2,{0,0,0,0})<<"\n\n";
 
     //cout << "Hello World!" <<test.value_temp(0.,0.1,0) <<endl;
     return 0;

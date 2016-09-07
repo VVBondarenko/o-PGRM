@@ -24,14 +24,24 @@ private:
     double omega2       (double x, double y);
 
     double left_under_int(basis_args args);//inited
-    double right_under_int(basis_args args);//inited
-    double gauss_integral_left(int dimension, basis_args Args);//inited
-    double gauss_integral_rigth(int dimension, basis_args Args);//inited
+    double left_under_int(double, double, int, int);//inited
 
+    double right_under_int(basis_args args);//inited
+    double gauss_integral_right(int dimension, basis_args Args);//inited
     double structure            (double x, double y, int n);//inited but should be corrected
+    double structure            (basis_args args);//inited but should be corrected
+
+    double SubIntegralLeft(basis_args args);
+    double IntegralLeft(basis_args args);
+    double SubIntegralRight(basis_args args);
+    double integralRight(basis_args args);
+
+
 
 public:
     solver(int basisType, int basisN, rect_area area, int Boundary_problem);//inited
+
+    double gauss_integral_left(int dimension, basis_args Args);//inited
 
     void form_matrix();//inited
     void form_rightpart();//inited
@@ -39,6 +49,8 @@ public:
     void solve();//inited
     double value_at         (double x, double y);//tbd
     void plot(/*int format*/);//tbd
+    void print_solution();
+
 };
 
 
@@ -46,15 +58,6 @@ solver::solver(int basisType, int basisN, rect_area area, int Boundary_problem)
 {
     this->type_of_problem = Boundary_problem;
     this->basis_of_system = new basis(basisType,basisN,area);
-
-
-    sys 		= gsl_matrix_alloc(basisN*basisN,basisN*basisN);
-    rightpart	= gsl_vector_alloc(basisN*basisN);
-    solution	= gsl_vector_alloc(basisN*basisN);
-
-    //initializing step parameters
-    diff_step 	= pow(2.,-9);
-    glob_delta 	= 1./diff_step;
 
     //initializing node & weights
     nodes[3] = sqrt(3./7. +2./7.*sqrt(1.2));
@@ -67,11 +70,22 @@ solver::solver(int basisType, int basisN, rect_area area, int Boundary_problem)
     weights[0] = weights[3];
     weights[1] = weights[2];
 
+    sys 		= gsl_matrix_alloc(basisN*basisN,basisN*basisN);
+    rightpart	= gsl_vector_alloc(basisN*basisN);
+    solution	= gsl_vector_alloc(basisN*basisN);
+
+    //initializing step parameters
+    diff_step 	= pow(2.,-9);
+    glob_delta 	= 1./diff_step;
 
 }
 double solver::structure(double x, double y, int n)
 {
     return basis_of_system->value_temp(x,y,n)*omega(x,y);
+}
+double solver::structure(basis_args args)
+{
+    return basis_of_system->value_temp(args)*omega(args.x,args.y);
 }
 
 double solver::left_under_int (basis_args args)
@@ -86,6 +100,19 @@ double solver::left_under_int (basis_args args)
                 structure(x,y+diff_step,n)+structure(x,y-diff_step,n)
                 -4.*structure(x,y,n))*glob_delta*glob_delta;
 }
+double solver::left_under_int (double x, double y, int m, int n)
+{
+//    double 	x = args.x;
+//    double 	y = args.y;
+//    int 	m = args.m;
+//    int 	n = args.n;
+
+    return  structure(x,y,m)*(
+                structure(x+diff_step,y,n)+structure(x-diff_step,y,n)+
+                structure(x,y+diff_step,n)+structure(x,y-diff_step,n)
+                -4.*structure(x,y,n))*glob_delta*glob_delta;
+}
+
 double solver::gauss_integral_left (int dimension, basis_args Args)
 {
     double x0 = basis_of_system->area.x0;
@@ -138,7 +165,7 @@ double solver::right_under_int(basis_args args)
 
     return rightpart_f(x,y)*structure(x,y,m);
 }
-double solver::gauss_integral_rigth(int dimension, basis_args Args)
+double solver::gauss_integral_right(int dimension, basis_args Args)
 {
     double x0 = basis_of_system->area.x0;
     double x1 = basis_of_system->area.x1;
@@ -159,7 +186,7 @@ double solver::gauss_integral_rigth(int dimension, basis_args Args)
             for (j = 0; j < 4; j++)
             {
                 temp_args.y = (double)(i-1)*stepy + y0 + 0.5*(nodes[j]+1.)*stepy;
-                res += weights[j]*gauss_integral_rigth(1, temp_args);
+                res += weights[j]*gauss_integral_right(1, temp_args);
             }
         }
 
@@ -186,14 +213,19 @@ void solver::form_matrix()
 {
     int i, j, NN = basis_of_system->N * basis_of_system->N;
 
-    basis_args args = {0,0,0,0};
+    basis_args args;// = {0,0,0,0};
+    args.x = 0;
+    args.y = 0;
+    args.m = 0;
+    args.n = 0;
+
     for(i = 0; i < NN; i++)
     {
         args.m = i;
         for(j = 0; j < NN; j++)
         {
             args.n = j;
-            gsl_matrix_set(sys, i,j, gauss_integral_rigth(2,args));
+            gsl_matrix_set(sys, i,j, gauss_integral_right(2,args));
         }
     }
 }
@@ -201,26 +233,40 @@ void solver::form_rightpart()
 {
     int i, NN = basis_of_system->N * basis_of_system->N;
 
-    basis_args args = {0,0,0,0};
+    basis_args args;// = {0,0,0,0};
+    args.x = 0;
+    args.y = 0;
+    args.m = 0;
+    args.n = 0;
+
+
     for(i = 0; i < NN; i++)
     {
         args.m = i;
-        gsl_vector_set(rightpart, i, gauss_integral_rigth(2,args));
+        gsl_vector_set(rightpart, i, gauss_integral_right(2,args));
     }
 }
 void solver::form_system()
 {
     int i, j, NN = basis_of_system->N * basis_of_system->N;
 
-    basis_args args = {0,0,0,0};
+    basis_args args;// = {0,0,0,0};
+    args.x = 0;
+    args.y = 0;
+    args.m = 0;
+    args.n = 0;
+
+
     for(i = 0; i < NN; i++)
     {
         args.m = i;
-        gsl_vector_set(rightpart, i, gauss_integral_rigth(2,args));
+        //gsl_vector_set(rightpart, i, gauss_integral_right(2,args));
+        gsl_vector_set(rightpart, i, right_under_int(args));
         for(j = 0; j < NN; j++)
         {
             args.n = j;
-            gsl_matrix_set(sys, i,j, gauss_integral_rigth(2,args));
+//            gsl_matrix_set(sys, i,j, gauss_integral_right(2,args));
+            gsl_matrix_set(sys, i,j, left_under_int(args));
         }
     }
 }
@@ -260,9 +306,6 @@ double solver::value_at(double x, double y)
 }
 
 
-//double f3(double x, double y) {return -2.*sin(x)*sin(y);}
-//double u3(double x, double y) {return sin(x)*sin(y);}
-
 double solver::boundary_phi(double x, double y)
 {
     return x*y*0.;
@@ -275,7 +318,7 @@ double solver::rightpart_f(double x, double y)
 
 double solver::omega(double x, double y)
 {
-    return (x-M_PI)*(x-M_PI)*(y-M_PI)*(y-M_PI);
+    return (x-M_PI)*(x+M_PI)*(y-M_PI)*(y+M_PI);
 }
 
 double solver::omega2(double x, double y)
@@ -283,27 +326,6 @@ double solver::omega2(double x, double y)
     return x*y*0.;
 }
 
-//void plot_region(gsl_vector *solution,
-//                 double x1, double x2,
-//                 double y1, double y2)
-//// Plot solution in rectangle region
-//// from x1 till x2 by x, and from y1 till y2 by y
-
-//{
-//    double hx = (x2-x1)/64.,
-//           hy = (y2-y1)/64.,
-//           i,j;
-
-//    FILE * op;
-//    op = fopen("../plot_data/plot_region", "w");
-//    for(i=x1; i<=x2; i+=hx)
-//        for(j=y1; j<=y2; j+=hy)
-//        {
-//                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, reconstruct_at(solution,i,j));
-//        }
-//    fclose(op);
-//    i = system("../bin/plotter.py ../plot_data/plot_region Numerical &");
-//}
 
 void solver::plot()
 {
@@ -312,12 +334,101 @@ void solver::plot()
            i,j;
 
     FILE * op;
-    op = fopen("../plot_data/plot_region", "w");
+    op = fopen("./plot_region", "w");
     for(i=basis_of_system->area.x0; i<=basis_of_system->area.x1; i+=hx)
         for(j=basis_of_system->area.y0; j<=basis_of_system->area.y1; j+=hy)
         {
-                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, value_at(i,j));
+//                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, value_at(i,j));
+                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, left_under_int(i,j,0,4));
         }
     fclose(op);
-    i = system("../bin/plotter.py ../plot_data/plot_region Numerical &");
+    i = system("../bin/plotter.py ./plot_region Numerical &");
+}
+
+void solver::print_solution()
+{
+    gsl_matrix_fprintf(stdout, sys, "%f");
+}
+
+
+
+double solver::SubIntegralLeft(basis_args args)
+{
+    int i,j;
+    double x0 = basis_of_system->area.x0;
+    double x1 = basis_of_system->area.x1;
+
+
+    double res = 0., step = (x1-x0)/intStep;
+    for (i = 1; i <= intStep; i++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            args.x = (double)(i-1)*step + x0 + 0.5*(nodes[j]+1.)*step;
+            res += weights[j]*left_under_int(args);
+        }
+    }
+
+    return 0.5*res*step;
+}
+
+double solver::IntegralLeft(basis_args args)
+{
+    int i,j;
+    double y0 = basis_of_system->area.y0;
+    double y1 = basis_of_system->area.y1;
+
+
+
+    double res = 0., step = (y1-y0)/intStep;
+    for (i = 1; i <= intStep; i++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            args.y = (double)(i-1)*step + y0 + 0.5*(nodes[j]+1.)*step;
+            res += weights[j]*SubIntegralLeft(args);
+        }
+    }
+
+    return 0.5*res*step;
+}
+
+double solver::SubIntegralRight(basis_args args)
+{
+    int i,j;
+    double x0 = basis_of_system->area.x0;
+    double x1 = basis_of_system->area.x1;
+
+
+    double res = 0., step = (x1-x0)/intStep;
+    for (i = 1; i <= intStep; i++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            args.x = (double)(i-1)*step + x0 + 0.5*(nodes[j]+1.)*step;
+            res += weights[j]*right_under_int(args);
+        }
+    }
+
+    return 0.5*res*step;
+}
+
+double solver::integralRight(basis_args args)
+{
+    int i,j;
+    double y0 = basis_of_system->area.y0;
+    double y1 = basis_of_system->area.y1;
+
+
+    double res = 0., step = (y1-y0)/intStep;
+    for (i = 1; i <= intStep; i++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            args.y = (double)(i-1)*step + y0 + 0.5*(nodes[j]+1.)*step;
+            res += weights[j]*SubIntegralRight(args);
+        }
+    }
+
+    return 0.5*res*step;
 }
