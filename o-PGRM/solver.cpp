@@ -25,15 +25,15 @@ private:
     double structure            (double x, double y, int n);//inited but should be corrected
 
 public:
-    solver(int basisType, int basisN, rect_area area, int Boundary_problem);
+    solver(int basisType, int basisN, rect_area area, int Boundary_problem);//inited
 
-    void form_matrix();
-    void form_rightpart();
-    void form_system();
-    void solve();
-    void plot(int format);
+    void form_matrix();//inited
+    void form_rightpart();//inited
+    void form_system();//inited
+    void solve();//inited
+    void plot(int format);//tbd
 
-    double value_at         (double x, double y);
+    double value_at         (double x, double y);//tbd
 };
 
 
@@ -69,7 +69,7 @@ double solver::structure(double x, double y, int n)
         return basis_of_system->value_temp(x,y,n)*omega(x,y);
 }
 
-double solver::left_under_int(basis_args args)
+double solver::left_under_int (basis_args args)
 {
     double 	x = args.x;
     double 	y = args.y;
@@ -81,7 +81,7 @@ double solver::left_under_int(basis_args args)
             structure(x,y+diff_step,n)+structure(x,y-diff_step,n)
             -4.*structure(x,y,n))*glob_delta*glob_delta;
 }
-double solver::gauss_integral_left(int dimension, basis_args Args)
+double solver::gauss_integral_left (int dimension, basis_args Args)
 {
     double x0 = basis_of_system->area.x0;
     double x1 = basis_of_system->area.x1;
@@ -177,6 +177,32 @@ double solver::gauss_integral_rigth(int dimension, basis_args Args)
 }
 
 
+void solver::form_matrix()
+{
+    int i, j, NN = basis_of_system->N * basis_of_system->N;
+
+    basis_args args = {0,0,0,0};
+    for(i = 0; i < NN; i++)
+    {
+        args.m = i;
+        for(j = 0; j < NN; j++)
+        {
+            args.n = j;
+            gsl_matrix_set(sys, i,j, gauss_integral_rigth(2,args));
+        }
+    }
+}
+void solver::form_rightpart()
+{
+    int i, NN = basis_of_system->N * basis_of_system->N;
+
+    basis_args args = {0,0,0,0};
+    for(i = 0; i < NN; i++)
+    {
+        args.m = i;
+        gsl_vector_set(rightpart, i, gauss_integral_rigth(2,args));
+    }
+}
 void solver::form_system()
 {
     int i, j, NN = basis_of_system->N * basis_of_system->N;
@@ -193,7 +219,6 @@ void solver::form_system()
         }
     }
 }
-
 
 void solver::solve()
 {

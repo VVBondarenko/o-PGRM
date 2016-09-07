@@ -526,7 +526,6 @@ compiler_clean:
 ####### Compile
 
 main.o: ../o-PGRM/main.cpp ../o-PGRM/solver.cpp \
-		../o-PGRM/gauss_integrals_compact.c \
 		../o-PGRM/basis.cpp \
 		../o-PGRM/af_poly.c \
 		../o-PGRM/B-splines.c \
