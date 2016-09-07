@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <gsl/gsl_linalg.h>
-#include "basis.cpp"
 #include "solver.cpp"
 using namespace std;
 
@@ -24,7 +23,14 @@ double (*phi)(double, double, int);
 
 int main(/*int argc, char *argv[]*/)
 {
-    basis test(1,3,0.,1.,0.,1.);
+    rect_area area;
+    area.x0 = 0.;
+    area.x1 = 1.;
+    area.y0 = 0.;
+    area.y1 = 1.;
+
+//    basis test(1,3,0.,1.,0.,1.);
+    basis test(1,3,area);
 
 //    phi = (&basis::value_temp);
     cout << "Hello World!" <<test.value_temp(0.,0.1,0) <<endl;

@@ -80,8 +80,6 @@ DIST          = ../../../Qt/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_charts.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_clucene_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
@@ -95,8 +93,6 @@ DIST          = ../../../Qt/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gamepad.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gamepad_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gui.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_help.pri \
@@ -121,8 +117,6 @@ DIST          = ../../../Qt/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_purchasing.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qml.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
@@ -146,8 +140,6 @@ DIST          = ../../../Qt/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialbus.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialport.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sql.pri \
@@ -239,8 +231,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_charts.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_clucene_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
@@ -254,8 +244,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gamepad.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gamepad_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gui.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_help.pri \
@@ -280,8 +268,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_purchasing.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qml.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
@@ -305,8 +291,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialbus.pri \
-		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialport.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri \
 		../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sql.pri \
@@ -388,8 +372,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_charts.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_charts_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_clucene_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
@@ -403,8 +385,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_designer_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gamepad.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gamepad_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gui.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_gui_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_help.pri:
@@ -429,8 +409,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_purchasing.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_purchasing_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qml.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
@@ -454,8 +432,6 @@ Makefile: ../o-PGRM/o-PGRM.pro ../../../Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.co
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sensors.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialbus.pri:
-../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialport.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri:
 ../../../Qt/5.7/gcc_64/mkspecs/modules/qt_lib_sql.pri:

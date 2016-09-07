@@ -11,6 +11,7 @@ typedef struct rect_area {
 class basis{
 public:
     basis(int basis_type, int nn, double x0, double x1, double y0, double y1);
+    basis(int basis_type, int nn, rect_area Area);
 //    ~basis();
     int N;
     rect_area area;
@@ -76,6 +77,27 @@ basis::basis(int basis_type, int nn, double x0, double x1, double y0, double y1)
     this->area.x1 = x1;
     this->area.y0 = y0;
     this->area.y1 = y1;
+    cubic_stepx = (area.x1-area.x0)/(double)(N-1);
+    cubic_stepy = (area.y1-area.y0)/(double)(N-1);
+    basis::value = &basis::Bsplines;
+    if(basis_type == 2)
+        basis::value = &basis::simplePoly;
+    if(basis_type == 3)
+        basis::value = &basis::chebyshevT;
+    if(basis_type == 4)
+        basis::value = &basis::chebyshevU;
+    if(basis_type == 5)
+        basis::value = &basis::fup3_poly;
+}
+basis::basis(int basis_type, int nn, rect_area Area)
+{
+    this->N = nn;
+    this->Basis_Type = basis_type;
+    this->area = Area;
+//    this->area.x0 = x0;
+//    this->area.x1 = x1;
+//    this->area.y0 = y0;
+//    this->area.y1 = y1;
     cubic_stepx = (area.x1-area.x0)/(double)(N-1);
     cubic_stepy = (area.y1-area.y0)/(double)(N-1);
     basis::value = &basis::Bsplines;
