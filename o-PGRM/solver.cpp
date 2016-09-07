@@ -12,10 +12,16 @@ private:
     int type_of_problem;    //nearly not used, should be reduced
     basis *basis_of_system; //inited
 
-    virtual double rightpart_f  (double x, double y) = 0;
-    virtual double boundary_phi (double x, double y) = 0;
-    virtual double omega        (double x, double y) = 0;
-    virtual double omega2       (double x, double y) = 0;
+//    virtual double rightpart_f  (double x, double y) = 0;
+//    virtual double boundary_phi (double x, double y) = 0;
+//    virtual double omega        (double x, double y) = 0;
+//    virtual double omega2       (double x, double y) = 0;
+
+    //this methods is used for testing
+    double rightpart_f  (double x, double y);
+    double boundary_phi (double x, double y);
+    double omega        (double x, double y);
+    double omega2       (double x, double y);
 
     double left_under_int(basis_args args);//inited
     double right_under_int(basis_args args);//inited
@@ -225,5 +231,55 @@ void solver::solve()
     gsl_permutation * p = gsl_permutation_alloc (basis_of_system->N*basis_of_system->N);
     gsl_linalg_LU_decomp (sys, p, &i);
     gsl_linalg_LU_solve (sys, p, rightpart, solution);
+}
+double solver::value_at(double x, double y)
+{
+    int i;
+    double result = 0.;
+
+    const double X0 = basis_of_system->area.x0;
+    const double X1 = basis_of_system->area.x1;
+    const double Y0 = basis_of_system->area.y0;
+    const double Y1 = basis_of_system->area.y1;
+
+    if(x==X0 && y==Y0)
+        return value_at(x+5.*diff_step,y+5.*diff_step);
+    else if(x==X0 && y==Y1)
+        return value_at(x+5.*diff_step,y-5.*diff_step);
+    else if(x==X1 && y==Y0)
+        return value_at(x-5.*diff_step,y+5.*diff_step);
+    else if(x==X1 && y==Y1)
+        return value_at(x-5.*diff_step,y-5.*diff_step);
+    for(i=0; i<basis_of_system->N*basis_of_system->N; i++)
+    {
+        result += gsl_vector_get(solution, i)*structure(x,y,i);
+    }
+
+    result+=boundary_phi(x,y);
+    return result;
+}
+
+
+//double f3(double x, double y) {return -2.*sin(x)*sin(y);}
+//double u3(double x, double y) {return sin(x)*sin(y);}
+
+double solver::boundary_phi(double x, double y)
+{
+    return x*y*0.;
+}
+
+double solver::rightpart_f(double x, double y)
+{
+    return -2.*sin(x)*sin(y);
+}
+
+double solver::omega(double x, double y)
+{
+    return (x-M_PI)*(x-M_PI)*(y-M_PI)*(y-M_PI);
+}
+
+double solver::omega2(double x, double y)
+{
+    return x*y*0.;
 }
 
