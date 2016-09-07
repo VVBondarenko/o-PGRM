@@ -339,7 +339,7 @@ void solver::plot()
         for(j=basis_of_system->area.y0; j<=basis_of_system->area.y1; j+=hy)
         {
 //                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, value_at(i,j));
-                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, left_under_int(i,j,0,4));
+                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, structure(i,j,63));
         }
     fclose(op);
     i = system("../bin/plotter.py ./plot_region Numerical &");
