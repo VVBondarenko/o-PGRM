@@ -38,7 +38,7 @@ public:
     void form_system();//inited
     void solve();//inited
     double value_at         (double x, double y);//tbd
-    void plot(int format);//tbd
+    void plot(/*int format*/);//tbd
 };
 
 
@@ -283,3 +283,41 @@ double solver::omega2(double x, double y)
     return x*y*0.;
 }
 
+//void plot_region(gsl_vector *solution,
+//                 double x1, double x2,
+//                 double y1, double y2)
+//// Plot solution in rectangle region
+//// from x1 till x2 by x, and from y1 till y2 by y
+
+//{
+//    double hx = (x2-x1)/64.,
+//           hy = (y2-y1)/64.,
+//           i,j;
+
+//    FILE * op;
+//    op = fopen("../plot_data/plot_region", "w");
+//    for(i=x1; i<=x2; i+=hx)
+//        for(j=y1; j<=y2; j+=hy)
+//        {
+//                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, reconstruct_at(solution,i,j));
+//        }
+//    fclose(op);
+//    i = system("../bin/plotter.py ../plot_data/plot_region Numerical &");
+//}
+
+void solver::plot()
+{
+    double hx = (basis_of_system->area.x1-basis_of_system->area.x0)/64.,
+           hy = (basis_of_system->area.y1-basis_of_system->area.y0)/64.,
+           i,j;
+
+    FILE * op;
+    op = fopen("../plot_data/plot_region", "w");
+    for(i=basis_of_system->area.x0; i<=basis_of_system->area.x1; i+=hx)
+        for(j=basis_of_system->area.y0; j<=basis_of_system->area.y1; j+=hy)
+        {
+                fprintf(op, "%15.15f %15.15f %15.15f\n", i,j, value_at(i,j));
+        }
+    fclose(op);
+    i = system("../bin/plotter.py ../plot_data/plot_region Numerical &");
+}

@@ -1,4 +1,4 @@
-#include <iostream>
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <gsl/gsl_linalg.h>
@@ -23,18 +23,17 @@ double (*phi)(double, double, int);
 
 int main(/*int argc, char *argv[]*/)
 {
-    //double intStep = 4.;
-    //initGaussInt();
     rect_area area;
-    area.x0 = 0.;
-    area.x1 = 1.;
-    area.y0 = 0.;
-    area.y1 = 1.;
+    area.x0 = -M_PI;
+    area.x1 =  M_PI;
+    area.y0 = -M_PI;
+    area.y1 =  M_PI;
+    solver task1(1,8,area,1);
+    task1.form_system();
+    task1.solve();
+    task1.plot();
 
-//    basis test(1,3,0.,1.,0.,1.);
-    basis test(1,3,area);
 
-//    phi = (&basis::value_temp);
-    cout << "Hello World!" <<test.value_temp(0.,0.1,0) <<endl;
+    //cout << "Hello World!" <<test.value_temp(0.,0.1,0) <<endl;
     return 0;
 }
