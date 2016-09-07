@@ -17,7 +17,7 @@ class basis{
 public:
     basis(int basis_type, int nn, double x0, double x1, double y0, double y1);
     basis(int basis_type, int nn, rect_area Area);
-//    ~basis();
+    //    ~basis();
     int N;
     rect_area area;
     double value_temp   (double x, double y, int n);
@@ -51,13 +51,13 @@ double basis::chebyshevU(double x, double y, int n)
 double basis::Bsplines (double x, double y, int n)
 {
     return f_B_3((N-1)/(area.x1-area.x0)*(x-area.x0-cubic_stepx*(double)(n%(N))))*
-           f_B_3((N-1)/(area.y1-area.y0)*(y-area.y0-cubic_stepy*(double)(n/(N))));
+            f_B_3((N-1)/(area.y1-area.y0)*(y-area.y0-cubic_stepy*(double)(n/(N))));
 }
 
 double basis::fup3_poly (double x, double y, int n)
 {
     return f_fup3_poly((N-1)/(area.x1-area.x0)*(x-area.x0-cubic_stepx*(double)(n%(N))))*
-           f_fup3_poly((N-1)/(area.y1-area.y0)*(y-area.y0-cubic_stepy*(double)(n/(N))));
+            f_fup3_poly((N-1)/(area.y1-area.y0)*(y-area.y0-cubic_stepy*(double)(n/(N))));
 }
 
 double basis::value_temp(double x, double y, int n)
@@ -117,10 +117,10 @@ basis::basis(int basis_type, int nn, rect_area Area)
     this->N = nn;
     this->Basis_Type = basis_type;
     this->area = Area;
-//    this->area.x0 = x0;
-//    this->area.x1 = x1;
-//    this->area.y0 = y0;
-//    this->area.y1 = y1;
+    //    this->area.x0 = x0;
+    //    this->area.x1 = x1;
+    //    this->area.y0 = y0;
+    //    this->area.y1 = y1;
     cubic_stepx = (area.x1-area.x0)/(double)(N-1);
     cubic_stepy = (area.y1-area.y0)/(double)(N-1);
     basis::value = &basis::Bsplines;

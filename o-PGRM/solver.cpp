@@ -31,9 +31,8 @@ public:
     void form_rightpart();//inited
     void form_system();//inited
     void solve();//inited
-    void plot(int format);//tbd
-
     double value_at         (double x, double y);//tbd
+    void plot(int format);//tbd
 };
 
 
@@ -66,7 +65,7 @@ solver::solver(int basisType, int basisN, rect_area area, int Boundary_problem)
 }
 double solver::structure(double x, double y, int n)
 {
-        return basis_of_system->value_temp(x,y,n)*omega(x,y);
+    return basis_of_system->value_temp(x,y,n)*omega(x,y);
 }
 
 double solver::left_under_int (basis_args args)
@@ -77,9 +76,9 @@ double solver::left_under_int (basis_args args)
     int 	n = args.n;
 
     return  structure(x,y,m)*(
-            structure(x+diff_step,y,n)+structure(x-diff_step,y,n)+
-            structure(x,y+diff_step,n)+structure(x,y-diff_step,n)
-            -4.*structure(x,y,n))*glob_delta*glob_delta;
+                structure(x+diff_step,y,n)+structure(x-diff_step,y,n)+
+                structure(x,y+diff_step,n)+structure(x,y-diff_step,n)
+                -4.*structure(x,y,n))*glob_delta*glob_delta;
 }
 double solver::gauss_integral_left (int dimension, basis_args Args)
 {
