@@ -7,6 +7,11 @@ typedef struct rect_area {
     double y0, y1;
 } rect_area;
 
+typedef struct basis_args {
+    double	x, y;
+    int		m, n;
+} basis_args;
+
 
 class basis{
 public:
@@ -16,6 +21,7 @@ public:
     int N;
     rect_area area;
     double value_temp   (double x, double y, int n);
+    double value_temp   (basis_args args);
     double (basis::*value)     (double x, double y, int n);
 private:
     int Basis_Type;
@@ -56,6 +62,23 @@ double basis::fup3_poly (double x, double y, int n)
 
 double basis::value_temp(double x, double y, int n)
 {
+    if(Basis_Type == 1)
+        return Bsplines(x,y,n);
+    if(Basis_Type == 2)
+        return simplePoly(x,y,n);
+    if(Basis_Type == 3)
+        return chebyshevT(x,y,n);
+    if(Basis_Type == 4)
+        return chebyshevU(x,y,n);
+    if(Basis_Type == 5)
+        return fup3_poly(x,y,n);
+    return 0.;
+}
+
+double basis::value_temp(basis_args args)
+{
+    double x = args.x, y = args.y;
+    int n = args.n;
     if(Basis_Type == 1)
         return Bsplines(x,y,n);
     if(Basis_Type == 2)
@@ -111,4 +134,3 @@ basis::basis(int basis_type, int nn, rect_area Area)
         basis::value = &basis::fup3_poly;
 }
 
-//int N;

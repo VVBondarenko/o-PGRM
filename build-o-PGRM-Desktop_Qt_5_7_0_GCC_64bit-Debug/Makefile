@@ -525,11 +525,12 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../o-PGRM/main.cpp ../o-PGRM/basis.cpp \
+main.o: ../o-PGRM/main.cpp ../o-PGRM/solver.cpp \
+		../o-PGRM/gauss_integrals_compact.c \
+		../o-PGRM/basis.cpp \
 		../o-PGRM/af_poly.c \
 		../o-PGRM/B-splines.c \
-		../o-PGRM/basis_functions.cpp \
-		../o-PGRM/solver.cpp
+		../o-PGRM/basis_functions.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../o-PGRM/main.cpp
 
 ####### Install

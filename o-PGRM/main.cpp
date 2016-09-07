@@ -23,6 +23,8 @@ double (*phi)(double, double, int);
 
 int main(/*int argc, char *argv[]*/)
 {
+    //double intStep = 4.;
+    //initGaussInt();
     rect_area area;
     area.x0 = 0.;
     area.x1 = 1.;
